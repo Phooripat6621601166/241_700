@@ -1,0 +1,12 @@
+docker run -p 80:80 nginx // run nginx on port 80
+docker ps --all // list all containers
+docker rm <containers_id // remove containers
+docker run -d -p 8070:80 nginx
+docker exec -it <container_id> bash
+ls // list files
+pwd // print working directory
+cd // change directory
+cat // print file content
+cd .. //go backcd
+exit // exit container
+docker stop <container_id // stop container
