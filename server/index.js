@@ -1,10 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2/promise');  // Ensure you're using mysql2/promise
+const cors = require('cors');
 const app = express();
 
 const port = 8000;
 app.use(bodyParser.json());
+app.use(cors());
 
 let conn = null;
 
@@ -55,31 +57,37 @@ app.get('/users', async (req, res) => {
 // POST /users - Create a new user
 app.post('/users', async (req, res) => {
     try {
-        const user = req.body;
-        const [results] = await conn.query('INSERT INTO users SET ?', user);
+        let user = req.body;
+        const results = await conn.query('INSERT INTO users SET ?', user);
         res.json({
             message: 'Create user successfully',
-            data: results
+            data: results[0]
         });
     } catch (error) {
-        console.log('Error:', error.message);
-        res.status(500).json({ error: error.message });
+        console.error("error",error.Message)
+        res.status(500).json({
+            message: 'something went worng',
+            errorMessage: error.message
+        })
+        
     }
 });
 
 // GET /user/:id - Fetch user by ID
-app.get('/user/:id', async (req, res) => {
-    const id = req.params.id;
+app.get('/users/:id', async (req, res) => {
     try {
-        const [user] = await conn.query('SELECT * FROM users WHERE idx= ?', [id]);
-        if (user.length > 0) {
-            res.json(user[0]);
-        } else {
-            res.status(404).json({ error: 'User not found' });
+        let id = req.params.id;
+        const results = await conn.query('SELECT * FROM users WHERE idx = ?', id);
+        if (results[0].length == 0) {
+
+            throw {statusCode: 404, message: 'User not found'};
         }
+        res.json(results[0][0]);
     } catch (error) {
-        console.log('Error:', error.message);
-        res.status(500).json({ error: error.message });
+        console.error('Error:', error.message);
+        res.status(500).json({ 
+            message: "something went wrong",
+            errorMessage: error.message});
     }
 });
 
@@ -89,7 +97,7 @@ app.put('/user/:id', async (req, res) => {
     const updateUser = req.body;
 
     try {
-        const [results] = await conn.query('UPDATE users SET ? WHERE idx = ?', [id]);
+        const [results] = await conn.query('UPDATE users SET ? WHERE idx = ?', [updateUser, id]);
         if (results.affectedRows > 0) {
             res.json({
                 message: 'Update user successfully',
@@ -126,13 +134,3 @@ app.listen(port, async () => {
     await initMYSQL();
     console.log('Http Server is running on port ' + port);
 });
-
-//cd change directory
-//ls list
-//pwd print working directory
-// cd.. กลับไปที่ directory ก่อนหน้า go back
-// exit ออกจาก terminal
-//docker stop <container id> หยุด container
-//docker system prune -a ลบ container ทั้งหมด
-//docker -compose up รัน container
-//docker-compose down หยุด container

@@ -1,71 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!--ส่วนนี้ไม่แสดงออกไปที่หน้าจอของ Browser-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!--ส่วนนี้จะแสดงออกที่หน้าจอของ Browser-->
-    <!--1.html content-->
-    <h1>เรียน HTML</h1>
-    <h2>เรียน CSS</h2>
-    <h3>เรียน JavaScript</h3>
-    <h4>เรียน PHP</h4>
-    <h5>เรียน MySQL</h5>
-    <h6>เรียน Bootstrap</h6>
-    <p>
-        เรียน HTML
-    </p>
-    <ul>
-        <li>HTML</li>
-        <li>CSS</li>
-        <li>JavaScript</li>
-        <li>PHP</li>
-        <li>MySQL</li>
-        <li>Bootstrap</li>
-    </ul>  
-    <ol>
-        <li>HTML</li>
-        <li>CSS</li>
-        <li>JavaScript</li>
-        <li>PHP</li>
-        <li>MySQL</li>
-        <li>Bootstrap</li>
-    </ol>    
-
-    <table>
-        <thead>
-            <tr>
-                <th>หัวข้อ1</th>
-                <th>หัวข้อ2</th>
-                <th>หัวข้อ3</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th>แถวที่1</th>
-                <th>แถวที่2</th>
-                <th>แถวที่3</th>
-            </tr>
-        </tbody>
-        <tbody>
-            <tr>
-                <th>ข้อมูลที่1</th>
-                <th>ข้อมูลที่2</th>
-                <th>ข้อมูลที่ที่3</th>
-            </tr>
-        </tbody>
-    </table>
-
-<a href="http://www.goolge.com"target="_blank">
-    Goolge
-</a>
-<img src="https://fastly.picsum.photos/id/254/200/300.jpg?grayscale&hmac=A_0a13N3-p-fVyOjN0oAUM6dcY6RAxe6XBayJDJFh_M"
-width="100"
-height="100px"
->
+    <div class="container">
+        <div class="header">
+            Register Form
+        </div>
+        <div class="flex form-input">
+            <div class="header-form">ชื่อ</div>
+            <input class="form" name="firstname" type="text">
+        </div>
+        <div class="flex form-input">
+            <div class="header-form">นามสกุล</div>
+            <input class="form" name="lastname" type="text"><br>
+        </div>
+        <div class="flex form-input">
+            <div class="header-form">อายุ</div>
+            <input class="form" name="age" type="number" min="0" max="100">
+        </div>
+        <div class="flex gender form-input">
+            <div class="header-form">เพศ</div>
+            <div class="flex">
+            <div>
+                <div>
+                    <input name="gender" type="radio"> ชาย
+                </div>
+                <div>
+                    <input name="gender" type="radio"> หญิง
+                </div>
+                <div>
+                    <input name="gender" type="radio"> LGTVHD+
+                </div>
+            </div>
+        </div>
+        <div class="form-input">
+            <div class="header-form">งานอดิเรก</div>
+            <div>
+                <input name="interest" type="checkbox" value="อ่านหนังสือ"> อ่านหนังสือ
+            </div>
+            <div>
+                <input name="interest" type="checkbox" value="ดูหนัง"> ดูหนัง
+            </div>
+            <div>
+                <input name="interest" type="checkbox" value="เล่นว่าว"> เล่นว่าว
+            </div>
+        </div>
+        <div class="form-input">
+            คัมอะทิบาย
+            <textarea name="description"></textarea>
+        </div>
+        <div class="center">
+            <button onclick="submitData()" class="button">ส่งข้อมูล</button>
+        </div>
+    </div>
+    <script src="index.js"></script>
 </body>
+<<<<<<< HEAD
+</html> 
+=======
 </html>
+>>>>>>> 554c9ab185da5f48dd991cad9166eef5f5a4c1aa
