@@ -3,13 +3,12 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql2/promise');  // Ensure you're using mysql2/promise
 const cors = require('cors');
 const app = express();
-
 const port = 8000;
 app.use(bodyParser.json());
 app.use(cors());
 
 let conn = null;
-
+//งาน
 // Initialize MySQL connection
 const initMYSQL = async () => {
     conn = await mysql.createConnection({
@@ -19,7 +18,100 @@ const initMYSQL = async () => {
         database: 'webdb',
         port: 8820,
     });
-};
+}
+
+const vallidateData = (userData) => {
+    let errors =[]
+
+
+    if (!userData.firstName) {
+        errors.push('กรุณากรอกชื่อ')
+    }
+    if (!userData.lastName) {
+        errors.push('กรุณากรอกนามสกุล')
+    }
+    if (!userData.age) {
+        errors.push('กรุณากรอกอายุ')
+    }
+    if (!userData.gender) {
+        errors.push('กรุณาเลือกเพศ')
+    }
+    if (!userData.interests) {
+        errors.push('กรุณาเลือกความสนใจ')
+    }
+    if (!userData.description) {
+        errors.push('กรุณากรอกคำอธิบาย')
+    }
+    return errors
+}
+
+
+const submitData =  async () => {
+    let firstNameDOM = document.querySelector('input[name=firstname]');
+    let lastNameDOM = document.querySelector('input[name=lastname]');
+    let ageDOM = document.querySelector('input[name=age]');
+    let genderDOM = document.querySelector('input[name=gender]:checked')||{}
+    let interestDOMs = document.querySelectorAll('input[name=interest]:checked')||{}
+    let descriptionDOM = document.querySelector('textarea[name=description]');
+
+    let messageDOM = document.getElementById('message');
+
+    try{
+    let interest = '';
+    for (let i = 0; i < interestDOMs.length; i++) {
+        interest += interestDOMs[i].value 
+        if (i < interestDOMs.length - 1) {
+            interest += ',';
+        }
+    }
+
+    let userData = {
+        firstName: firstNameDOM.value,
+        lastName:  lastNameDOM.value,
+        age: ageDOM.value,
+        gender: genderDOM.value,
+        description: descriptionDOM.value,
+        interests: interest
+    }
+    console.log('submitData',userData);
+
+/*
+    const errors = vallidateData(userData)
+    if(errors.length > 0){
+            //มี error
+            throw {
+            message:'กรุณากรอกข้อมูลให้ครบถ้วน',
+            errors: errors
+         }
+    }
+  */  
+    const responce = await axios.post('http://localhost:8000/users',userData)
+    console.log('responce',responce.data);
+    messageDOM.innerText = 'บันทึกข้อมูลเรียบร้อย'
+    messageDOM.className = 'message success'
+} catch (error) {
+    console.log('error message',error.message);
+    console.log('error',error.errors);
+     
+    if (error.response){
+        console.log('error',error.response.data.message)
+        error.errors = error.response.data.errors
+    } 
+
+    let htmlData = '<div>'
+    htmlData `<div> $ {error.message} + </div>`
+    htmlData += '<ul>'
+    for (let i = 0; i < error.error.length; i++){
+        htmlData += `<li> ${error.errors[i]} + </li>`
+    }
+    htmlData += '</ul>'
+    htmlData += '</div>'
+
+        
+    messageDOM.innerText = 'บันทึกข้อมูลไม่สำเร็จ'
+    messageDOM.className = 'message danger'
+    }
+}
 
 // Test DB connection
 app.get('/testdb', async (req, res) => {
@@ -58,16 +150,25 @@ app.get('/users', async (req, res) => {
 app.post('/users', async (req, res) => {
     try {
         let user = req.body;
+        const error = vallidateData(user)
+        if (error.length > 0) {
+            throw {
+                message: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+                errors: error
+            };
+        }
         const results = await conn.query('INSERT INTO users SET ?', user);
         res.json({
             message: 'Create user successfully',
             data: results[0]
         });
     } catch (error) {
-        console.error("error",error.Message)
+        const errorMessages = error.message || 'Something went wrong'
+        console.errors = error.errors || [] 
+        console.error('error message:', error.message)
         res.status(500).json({
-            message: 'something went worng',
-            errorMessage: error.message
+            message: errorMessages,
+            errorMessage: errors
         })
         
     }
