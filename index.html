@@ -5,63 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://unpkg.com/tailwindcss@%5E1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-    <a href="user.html">Go to management</a>
-    <div class="container">
+    <!--form-->
+
+
+    <div class= "container">
         <div class="header"> 
-            Register form
+            🌸 Register Form 🌸
+        </div> 
+        <form action="#"></form>
+        <div class="input-box">
+            <input name="firstname" type="text"required> 
+            <label>Firstname</label>
         </div>
-      <div class="flex form-input">
-      <div class="header-form">ชื่อ</div>
-      <input class="form" name="firstname" type="text">
-      </div> 
-      <div class="flex form-input">
-    <div class="header-form">นามสกุล</div>
-    <input class="form" name="lastname" type="text">
-      </div>
-      <div class="flex form-input">
-      <div class="header-form">อายุ</div>
-      <input class="form" name="age" type="number" min="0" max="100"> 
-      </div>
-    <div class="gender form-input">
-    <div class="gender form">เพศ</div>
-    <div class="flex">
-        <div>
-            <input name="gender" type="radio" value="ชาย"> ชาย
+
+        <div class="input-box">
+            <input name="lastname" type="text" required> <br>
+            <label>Lastname</label> 
         </div>
-        <div>
-            <input name="gender" type="radio"value="หญิง"> หญิง
+
+        <div class="input-box">
+            <input name="age"  type="number" required> 
+            <label>Age</label> 
+
         </div>
-        <div>
-            <input name="gender" type="radio" value="อื่นๆ"> อื่นๆ   
+
+        <div class=" form-input"> <!-- อิสระ เชียนอะไรก็ได้-->
+            <div class="header-form">Sex</div>
+            <div class="flex">
+                <div> 
+                    <input name="gender"type="radio" value="ชาย"> Male 🚹
+                </div>
+                <div> 
+                     <input name="gender" type="radio" value="หญิง"> Female 🚺
+                </div>
+               <div>
+                    <input name="gender" type="radio" value="ไม่ระบุ"> Not specified ❌
+               </div>
+            </div>
+        </div> 
+        <div class="form-input">
+            <div class="header-form">Interests</div>
+            <div class="line">
+                <div>
+                    <input name="interest" type="checkbox" value="อ่านหนังสือ"> Read a book 📖
+                </div>
+                <div>
+                    <input name="interest" type="checkbox" value="ดูหนัง">  Watch a movie 🍿
+                </div>
+                <div>
+                    <input name="interest" type="checkbox" value="ฟังเพลง"> Listen to music 🎶
+                </div>
+
+            </div>
+            
         </div>
-      </div>
-    </div>
-    <div class="form-input">
-        งานอดิเรก
-        <div>
-            <input name="interest" type="checkbox" value="อ่านหนังสือ"> อ่านหนังสือ  
-        </div>
-        <div>
-            <input name="interest" type="checkbox" value="ดูหนัง"> ดูหนัง
-        </div>    
-            <div>    
-            <input name="interest" type="checkbox"  value="ฟังเพลง"> ฟังเพลง  
-        </div>
-    </div>
-    <div class="form-input">
-        คำอธิบาย
-        <div>
+        <div class="form-input">
+            <div class="header-des">Description</div>
         <textarea name="description"></textarea>
-    </div>
-    
-    <div id = message class = 'message'> </div>
-    <div class="center">
-        <button onclick="submitData()" class="button">ส่งข้อมูล</button>
-    </div>
+        </div>
+        <div id=message class="message"></div>
+
+
+        <div class="center">
+            <button onclick="submitData()" class="button">Submit</button>
+        </div>
+       <a href="user.html" class="info animate">Go to User management</a>
+        <form action="#"></form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
     <script src="index.js"></script>
+    
 </body>
-</html> //
+</html>
